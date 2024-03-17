@@ -9,3 +9,5 @@ javac -d bin src\PostgreSQLJDBCConnection.java
 Launching Instructions: 
 java -cp "bin;lib/postgresql-42.7.2.jar" src.PostgreSQLJDBCConnection
 
+Video Demonstration:
+https://youtu.be/DMGVVEl_Akw
