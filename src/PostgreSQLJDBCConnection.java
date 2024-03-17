@@ -1,12 +1,11 @@
 package src;
-//import java.beans.Statement;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.sql.ResultSet; // Import ResultSet from java.sql
-import java.util.Date; // Import Date from java.util
+import java.sql.ResultSet; 
+import java.util.Date; 
 
 
 
@@ -15,48 +14,33 @@ public class PostgreSQLJDBCConnection {
 
     public static void main(String[] args) {
 
-        // JDBC & Database credentials
-        // Replace <HOST>, <PORT>, <DATABASE_NAME>, <USERNAME>, and <PASSWORD> with your actual
         conn = establishConnection();
 
-        // String url = "jdbc:postgresql://localhost:5432/Student";
-        // String user = "postgres";
-        // String password = "Katherine";
+        if (conn != null) {
+            System.out.println("Connected to PostgreSQL successfully!\n");
+            
+            getAllStudents();
 
-      //  try { // Load PostgreSQL JDBC Driver
+            addStudent("kat", "M", "maclean@gmail.com", new Date(System.currentTimeMillis()));
+            getAllStudents();
 
-           // Class.forName("org.postgresql.Driver");
-            // Connect to the database
-           // Connection conn = DriverManager.getConnection(url, user, password);
+            updateStudentEmail(2, "Carleton@gmail.ca");
+            getAllStudents();
 
-            if (conn != null) {
-                System.out.println("Connected to PostgreSQL successfully!\n");
-                
-                getAllStudents();
-                addStudent("kat", "M", "maclean@gmail.com", new Date(System.currentTimeMillis()));
-                getAllStudents();
-                updateStudentEmail(2, "Maclean@gmail.ca");
-                getAllStudents();
-                deleteStudent(3);
-                getAllStudents();
+            deleteStudent(3);
+            getAllStudents();
+        } 
+        else {
+            System.out.println("Failed to establish connection.");
+        } 
 
-            } 
-            else {
-                System.out.println("Failed to establish connection.");
-            } 
-
-            try {
-                if (conn != null)
-                    conn.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-            // Close the connection (in a real scenario, do this in a finally
-            //conn.close();
-       // }
-        // catch (ClassNotFoundException | SQLException e) {
-        //     e.printStackTrace();
-        // }  
+        try {
+            if (conn != null)
+                conn.close();
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     private static Connection establishConnection() {
@@ -96,7 +80,6 @@ public class PostgreSQLJDBCConnection {
             }
         }
         catch (SQLException e) {
-            // Handle the exception or print the error message
             e.printStackTrace();
         }
     }
