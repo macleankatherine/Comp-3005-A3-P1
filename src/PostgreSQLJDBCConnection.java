@@ -10,10 +10,11 @@ import java.util.Date;
 
 
 public class PostgreSQLJDBCConnection {
+    // Global Connection object
     private static Connection conn;
 
     public static void main(String[] args) {
-
+        // Establish database connection
         conn = establishConnection();
 
         if (conn != null) {
@@ -43,6 +44,7 @@ public class PostgreSQLJDBCConnection {
         }
     }
 
+    // Method to establish a database connection
     private static Connection establishConnection() {
         Connection connection = null;
         String url = "jdbc:postgresql://localhost:5432/Student";
@@ -57,6 +59,7 @@ public class PostgreSQLJDBCConnection {
         return connection;
     }
 
+    // Method to retrieve all students from the database and display them
     static void getAllStudents(){
         try{
             Statement stmt = conn.createStatement();
@@ -64,7 +67,7 @@ public class PostgreSQLJDBCConnection {
             ResultSet rs = stmt.executeQuery(SQL);
 
             while(rs.next()){
-
+                // Retrieve student information from the ResultSet
                 int studentId = rs.getInt("student_id");
                 String firstName = rs.getString("first_name");
                 String lastName = rs.getString("last_name");
@@ -84,6 +87,7 @@ public class PostgreSQLJDBCConnection {
         }
     }
 
+    // Method to add a new student to the database
     static void addStudent(String first_name, String last_name, String email, Date enrollment_date){
         
         String insertSQL = "INSERT INTO Students (first_name, last_name, email, enrollment_date) VALUES (?, ?, ?, ?)";
@@ -108,6 +112,8 @@ public class PostgreSQLJDBCConnection {
         }
     }
 
+
+    // Method to update the email of a student
     static void updateStudentEmail(int student_id, String new_email){
         String insertSQL = "UPDATE Students SET email = ? WHERE student_id = ?";
         
@@ -126,7 +132,8 @@ public class PostgreSQLJDBCConnection {
             e.printStackTrace();
         }
     }
-
+        
+    // Method to delete a student from the database
     static void deleteStudent(int student_id){
         String insertSQL = "DELETE FROM Students WHERE student_id = ?";
         
